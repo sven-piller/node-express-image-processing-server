@@ -15,6 +15,8 @@ const upload = multer({
     storage: storage
 });
 const photoPath = path.resolve(__dirname, '../../client/photo-viewer.html')
+const imageProcessor = require("./imageProcessor");
+
 
 function filename(request, file, callback) {
     callback(null, file.originalname)
@@ -29,7 +31,7 @@ function fileFilter(request, file, callback) {
     }
 }
 
-router.post('/upload', upload.single('photo'), (req, res) => {
+router.post('/upload', upload.single('photo'), async (req, res) => {
     if (req.fileValidationError) {
         res.status(400).json({
             error: req.fileValidationError
@@ -38,6 +40,11 @@ router.post('/upload', upload.single('photo'), (req, res) => {
         res.status(201).json({
             success: true
         })
+    }
+    try {
+        await imageProcessor(req.file.filename)
+    } catch (error) {
+        
     }
 })
 
