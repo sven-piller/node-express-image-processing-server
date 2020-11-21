@@ -8,6 +8,7 @@ module.exports = {
       "es6": true
     },
     "rules": {
-      "allowArrowFunctions": true
+      "allowArrowFunctions": true,
+      "linebreak-style": false
     }
 };
